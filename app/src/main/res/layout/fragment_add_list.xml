@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_gravity="center">
+
+    <Button
+        android:id="@+id/btnscan"
+        android:layout_below="@id/layoutpassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Scan barcode"
+        android:background="@color/colorPrimary"
+        android:textColor="@color/cardview_light_background"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_add_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        tools:listitem="@layout/list_add"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tgl_kembali"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tgl_pinjam">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="datetime"
+            android:hint="Tanggal kembali"
+            android:textColor="@android:color/black"
+            android:id="@+id/id_kembali"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+    android:id="@+id/keperluan"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/tgl_kembali">
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:hint="Keperluan"
+        android:textColor="@android:color/black"
+        android:id="@+id/id_keperluan"/>
+</com.google.android.material.textfield.TextInputLayout>
+    <Button
+        android:id="@+id/btnadmin"
+        android:layout_below="@id/keperluan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ajukan pinjaman"
+        android:layout_marginTop="30dp"
+        android:background="@color/colorPrimary"
+        android:textColor="@color/cardview_light_background"/>
+</LinearLayout>
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/progadd"></ProgressBar>
+    </FrameLayout>
+
+
+</androidx.core.widget.NestedScrollView>
