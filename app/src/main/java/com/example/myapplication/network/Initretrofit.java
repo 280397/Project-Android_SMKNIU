@@ -5,7 +5,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Initretrofit {
 
-    private static final String URL = "http://192.168.1.14/Project-SMKNIU/";
+    private static final String URL = "http://dku.itstravel.web.id/";
     private static final String BASE_URL_IMAGE = URL + "assets/img/barang/";
     private static final String BASE_URL_KTP = URL + "asset/foto_ktp/";
 

@@ -1,5 +1,7 @@
 package com.example.myapplication.ui.addlist;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -8,10 +10,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.ScanActivity;
 import com.example.myapplication.ScanAdminAddActivity;
@@ -22,11 +27,14 @@ import com.example.myapplication.network.Initretrofit;
 import com.example.myapplication.sharepref.SharedPreferences;
 import com.pixplicity.easyprefs.library.Prefs;
 
+import java.util.Calendar;
 import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -48,6 +56,11 @@ public class AddFragment extends Fragment{
     Button btnadmin;
     private List<DataAddItem> add;
 
+    Calendar myCalendar;
+    DatePickerDialog.OnDateSetListener date;
+    EditText txt_tgl, txt_jam;
+    Button btn_get_datetime;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -60,11 +73,75 @@ public class AddFragment extends Fragment{
         recyclerView = root.findViewById(R.id.rv_add_list);
 
         btnadmin =root.findViewById(R.id.btnadmin);
-        et_tgl_kembali = root.findViewById(R.id.id_kembali);
+//        et_tgl_kembali = root.findViewById(R.id.id_kembali);
         et_keperluan = root.findViewById(R.id.id_keperluan);
         btn = (Button) root.findViewById(R.id.btnscan);
         progressBar = root.findViewById(R.id.progadd);
 
+        et_tgl_kembali = root.findViewById(R.id.txt_tgl);
+//        txt_jam = (EditText) findViewById(R.id.txt_jam);
+        btn_get_datetime = root.findViewById(R.id.btn_get_datetime);
+
+        myCalendar = Calendar.getInstance();
+        date = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                  int dayOfMonth) {
+                // TODO Auto-generated method stub
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH, monthOfYear);
+                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                updateLabel();
+            }
+        };
+
+
+        final FragmentManager fm = ((AppCompatActivity)getActivity()).getSupportFragmentManager();
+
+        txt_tgl.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                new DatePickerDialog(this, date, myCalendar
+                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+
+        txt_jam.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                Calendar mcurrentTime = Calendar.getInstance();
+                int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+                int minute = mcurrentTime.get(Calendar.MINUTE);
+                TimePickerDialog mTimePicker;
+                mTimePicker = new TimePickerDialog(MainActivity.this, new TimePickerDialog.OnTimeSetListener() {
+
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                        txt_jam.setText(selectedHour + ":" + selectedMinute);
+                    }
+                }, hour, minute, true);//Yes 24 hour time
+                mTimePicker.setTitle("Select Time");
+                mTimePicker.show();
+
+            }
+        });
+
+        btn_get_datetime.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(MainActivity.this,
+                        "Tanggal : " + txt_tgl.getText().toString() + "\n" +
+                                "Jam : " + txt_jam.getText().toString()
+                        , Toast.LENGTH_SHORT
+                ).show();
+            }
+        });
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
