@@ -16,16 +16,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ScanFinishAdminActivity"></activity>
+        <service
+            android:name=".MyService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <activity android:name=".ScanFinishAdminActivity" />
         <activity android:name=".ScanFinishActivity" />
         <activity android:name=".ScanAdminAddActivity" />
         <activity
             android:name=".DrawerActivity"
             android:label="@string/title_activity_drawer"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".DetailActivity" >
-
-        </activity>
+        <activity android:name=".DetailActivity"></activity>
         <activity android:name=".ButtomActivity" />
         <activity
             android:name=".ScanActivity"

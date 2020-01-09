@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -59,7 +60,8 @@ public class AddFragment extends Fragment implements DatePickerDialog.OnDateSetL
     private AddViewModel addViewModel;
     public static EditText et_tgl_kembali, et_waktu, et_keperluan;
     String kode, id_user_pjmm,id;
-    private  Button btn, date, time;
+    private  Button date, time;
+    ImageButton btn;
     AddListAdapter adapter;
     RecyclerView recyclerView;
     ProgressBar progressBar;
@@ -88,7 +90,7 @@ public class AddFragment extends Fragment implements DatePickerDialog.OnDateSetL
         et_tgl_kembali = root.findViewById(R.id.id_kembali);
         et_waktu = root.findViewById(R.id.id_waktu);
         et_keperluan = root.findViewById(R.id.id_keperluan);
-        btn = (Button) root.findViewById(R.id.btnscan);
+        btn = root.findViewById(R.id.btnscan);
         date = root.findViewById(R.id.btn_date);
         time = root.findViewById(R.id.btn_time);
         progressBar = root.findViewById(R.id.progadd);
@@ -126,6 +128,7 @@ public class AddFragment extends Fragment implements DatePickerDialog.OnDateSetL
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), ScanActivity.class);
                 startActivity(intent);
+                setButtonState(true, false);
             }
         });
 
@@ -144,6 +147,7 @@ public class AddFragment extends Fragment implements DatePickerDialog.OnDateSetL
                     i.putExtra("tgl_aju_kembali",et_tgl_kembali.getText().toString()+ " " + et_waktu.getText().toString());
                     i.putExtra("keperluan",et_keperluan.getText().toString());
                     startActivity(i);
+                    setButtonState(true,true);
                 }
 
 
@@ -243,5 +247,12 @@ public class AddFragment extends Fragment implements DatePickerDialog.OnDateSetL
         StringBuilder sb = new StringBuilder().append(year).append("/").append(monthOfYear + 1).append("/").append(dayOfMonth);
         String formattedDate = sb.toString();
         et_tgl_kembali.setText(formattedDate);
+    }
+
+
+    void setButtonState(Boolean isItem,
+                                    Boolean isAdmin) {
+        btn.setEnabled(isItem);
+        btnadmin.setEnabled(isAdmin);
     }
 }

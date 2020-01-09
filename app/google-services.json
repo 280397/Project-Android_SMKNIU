@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "244883734710",
+    "firebase_url": "https://smkniu-inventory.firebaseio.com",
+    "project_id": "smkniu-inventory",
+    "storage_bucket": "smkniu-inventory.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:244883734710:android:5b0ac1d9c714363fdfe617",
+        "android_client_info": {
+          "package_name": "com.example.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "244883734710-cmfih3t4nc0opdtakj977vcbh8fhji2o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.myapplication",
+            "certificate_hash": "81a7d41494d40ae4fc99022f76f88e2c8d0a400a"
+          }
+        },
+        {
+          "client_id": "244883734710-t9lkhn8f148ldmdgpmpdf5ao26m9uad8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB1xgN2j5pYObff5L4CXQ0UIVz6HAbphWs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "244883734710-t9lkhn8f148ldmdgpmpdf5ao26m9uad8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

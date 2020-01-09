@@ -73,7 +73,6 @@ public class FinishFragment extends Fragment {
             }
         });
 
-
         return root;
     }
 
@@ -142,6 +141,12 @@ public class FinishFragment extends Fragment {
         super.onResume();
         getData(Prefs.getString(SharedPreferences.getId(),""));
 
+    }
+
+    void setButtonState(Boolean isItem,
+                        Boolean isAdmin) {
+        btn.setEnabled(isItem);
+        finish_btnadmin.setEnabled(isAdmin);
     }
 
 
