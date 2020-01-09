@@ -41,56 +41,99 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tgl_pinjam">
-<!--        <EditText-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:inputType="datetime"-->
-<!--            android:hint="Tanggal kembali"-->
-<!--            android:textColor="@android:color/black"-->
-<!--            android:id="@+id/id_kembali"/>-->
+
+
         <LinearLayout
-            android:padding="16dp"
+            android:layout_marginTop="16dp"
             android:layout_width="match_parent"
             android:weightSum="100"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:background="@drawable/border_ui">
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="80"
+                android:layout_width="match_parent"
+                android:layout_weight="50"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/btn_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Get Date"
+                    android:textSize="10sp"
+                    android:bottomRightRadius="7dp"
+                    android:bottomLeftRadius="7dp"
+                    android:topLeftRadius="7dp"
+                    android:topRightRadius="7dp"/>
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_weight="50"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/btn_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Get Time"
+                    android:textSize="10sp"
+                    android:bottomRightRadius="7dp"
+                    android:bottomLeftRadius="7dp"
+                    android:topLeftRadius="7dp"
+                    android:topRightRadius="7dp"/>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:weightSum="100"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/border_ui">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_weight="50"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <EditText
-                    android:id="@+id/txt_tgl"
+                    android:id="@+id/id_kembali"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clickable="true"
                     android:editable="false"
                     android:focusable="false"
-                    android:hint="Tanggal" />
+                    android:hint="Y/m/d" />
 
 
             </LinearLayout>
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="20"
+                android:layout_width="match_parent"
+                android:layout_weight="50"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-                <Button
-                    android:id="@+id/btn_get_datetime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="Get Date Time"
-                    android:textSize="10sp"
-                    android:layout_gravity="right"
-                    android:bottomRightRadius="7dp"
-                    android:bottomLeftRadius="7dp"
-                    android:topLeftRadius="7dp"
-                    android:topRightRadius="7dp"/>
+
+                <EditText
+                    android:id="@+id/id_waktu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:inputType="time"
+                    android:hint="00:00:00" />
+
+
             </LinearLayout>
 
         </LinearLayout>
+
 
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -99,8 +142,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_below="@+id/tgl_kembali">
+<!--        <EditText-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:inputType="text"-->
+<!--            android:hint="Keperluan"-->
+<!--            android:textColor="@android:color/black"-->
+<!--            android:id="@+id/id_keperluan"/>-->
         <LinearLayout
-            android:padding="16dp"
             android:layout_width="match_parent"
             android:weightSum="100"
             android:layout_height="wrap_content"
@@ -113,20 +162,21 @@
                 android:orientation="vertical">
 
                 <EditText
-                    android:id="@+id/id_keperluan"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@android:color/black"
-                    android:clickable="true"
+                    android:inputType="text"
                     android:hint="Keperluan"
-                    android:editable="false"
-                    android:focusable="false"/>
+                    android:textColor="@android:color/black"
+                    android:id="@+id/id_keperluan"/>
 
 
             </LinearLayout>
 
         </LinearLayout>
+
+
 </com.google.android.material.textfield.TextInputLayout>
+
     <Button
         android:id="@+id/btnadmin"
         android:layout_below="@id/keperluan"

@@ -66,7 +66,7 @@ public class ScanFinishActivity extends AppCompatActivity implements ZXingScanne
         {
             if(checkPermission())
             {
-                Toast.makeText(getApplicationContext(), "Permission already granted!", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Permission already granted!\nPlease scan barcode item!", Toast.LENGTH_LONG).show();
             }
             else
             {
@@ -197,7 +197,7 @@ public class ScanFinishActivity extends AppCompatActivity implements ZXingScanne
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
 
-                            Toast.makeText(ScanFinishActivity.this, "\n" +
+                            Toast.makeText(ScanFinishActivity.this,
                                     "This item is not in the queue! or\nBarcode not registered!", Toast.LENGTH_SHORT).show();
                             finish();
                         }

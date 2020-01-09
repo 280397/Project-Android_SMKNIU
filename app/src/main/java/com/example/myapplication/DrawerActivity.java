@@ -16,6 +16,8 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.myapplication.ui.addlist.AddFragment;
+import com.example.myapplication.ui.addlist.DatePickerFragment;
 import com.google.android.material.navigation.NavigationView;
 import com.pixplicity.easyprefs.library.Prefs;
 
@@ -27,8 +29,8 @@ import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
 import android.widget.TextView;
 
-public class DrawerActivity extends AppCompatActivity {
-   String name, username;
+public class DrawerActivity extends AppCompatActivity{
+    String name, username;
 //
 
     private AppBarConfiguration mAppBarConfiguration;
@@ -82,8 +84,8 @@ public class DrawerActivity extends AppCompatActivity {
         TextView name = (TextView) headerView.findViewById(R.id.show_name);
         TextView username = (TextView) headerView.findViewById(R.id.show_username);
 
-        name.setText(Prefs.getString(SharedPreferences.getName(),""));
-        username.setText(Prefs.getString(SharedPreferences.getUsername(),""));
+        name.setText(Prefs.getString(SharedPreferences.getName(), ""));
+        username.setText(Prefs.getString(SharedPreferences.getUsername(), ""));
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
 
@@ -112,14 +114,15 @@ public class DrawerActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-    private void send(){
-        Intent i = new Intent(this,ButtomActivity.class);
+
+    private void send() {
+        Intent i = new Intent(this, ButtomActivity.class);
         startActivity(i);
     }
 
     private void logout() {
         Prefs.clear();
-        Intent i = new Intent(this,MainActivity.class);
+        Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
         finish();
     }

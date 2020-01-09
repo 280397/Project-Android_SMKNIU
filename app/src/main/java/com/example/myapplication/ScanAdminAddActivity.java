@@ -69,7 +69,7 @@ public class ScanAdminAddActivity extends AppCompatActivity implements ZXingScan
 
         if (currentApiVersion >= Build.VERSION_CODES.M) {
             if (checkPermission()) {
-                Toast.makeText(getApplicationContext(), "Permission already granted!", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Permission already granted!\nPlease scan admin ID Card!", Toast.LENGTH_LONG).show();
             } else {
                 requestPermission();
             }

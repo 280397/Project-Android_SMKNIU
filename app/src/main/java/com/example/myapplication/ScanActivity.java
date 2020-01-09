@@ -64,7 +64,7 @@ public class ScanActivity extends AppCompatActivity implements ZXingScannerView.
         {
             if(checkPermission())
             {
-                Toast.makeText(getApplicationContext(), "Permission already granted!", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Permission already granted!\nPlease scan barcode item!", Toast.LENGTH_LONG).show();
             }
             else
             {

@@ -1,8 +1,14 @@
 package com.example.myapplication.ui.addlist;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.DatePickerDialog.OnDateSetListener;
+import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -13,6 +19,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -27,12 +34,15 @@ import com.example.myapplication.network.Initretrofit;
 import com.example.myapplication.sharepref.SharedPreferences;
 import com.pixplicity.easyprefs.library.Prefs;
 
+import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDialogFragment;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProviders;
@@ -45,22 +55,24 @@ import retrofit2.Response;
 import static android.app.Activity.RESULT_OK;
 import static android.content.ContentValues.TAG;
 
-public class AddFragment extends Fragment{
+public class AddFragment extends Fragment implements DatePickerDialog.OnDateSetListener{
     private AddViewModel addViewModel;
-    public static EditText et_tgl_kembali, et_keperluan;
+    public static EditText et_tgl_kembali, et_waktu, et_keperluan;
     String kode, id_user_pjmm,id;
-    private  Button btn;
+    private  Button btn, date, time;
     AddListAdapter adapter;
     RecyclerView recyclerView;
     ProgressBar progressBar;
     Button btnadmin;
     private List<DataAddItem> add;
 
-    Calendar myCalendar;
-    DatePickerDialog.OnDateSetListener date;
-    EditText txt_tgl, txt_jam;
-    Button btn_get_datetime;
+    TextView dateOfBirthET;
+    String selectedDate;
+    public static final int REQUEST_CODE = 11; // Used to identify the result
 
+    public AddFragment() {
+        // Required empty public constructor
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -73,76 +85,43 @@ public class AddFragment extends Fragment{
         recyclerView = root.findViewById(R.id.rv_add_list);
 
         btnadmin =root.findViewById(R.id.btnadmin);
-//        et_tgl_kembali = root.findViewById(R.id.id_kembali);
+        et_tgl_kembali = root.findViewById(R.id.id_kembali);
+        et_waktu = root.findViewById(R.id.id_waktu);
         et_keperluan = root.findViewById(R.id.id_keperluan);
         btn = (Button) root.findViewById(R.id.btnscan);
+        date = root.findViewById(R.id.btn_date);
+        time = root.findViewById(R.id.btn_time);
         progressBar = root.findViewById(R.id.progadd);
 
-        et_tgl_kembali = root.findViewById(R.id.txt_tgl);
-//        txt_jam = (EditText) findViewById(R.id.txt_jam);
-        btn_get_datetime = root.findViewById(R.id.btn_get_datetime);
+//        selectDate = root.findViewById(R.id.SelectDate); // getting the image button in fragment_blank.xml
+//        dateOfBirthET = root.findViewById(R.id.in_date); // getting the TextView in fragment_blank.xml
 
-        myCalendar = Calendar.getInstance();
-        date = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                  int dayOfMonth) {
-                // TODO Auto-generated method stub
-                myCalendar.set(Calendar.YEAR, year);
-                myCalendar.set(Calendar.MONTH, monthOfYear);
-                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                updateLabel();
-            }
-        };
-
-
-        final FragmentManager fm = ((AppCompatActivity)getActivity()).getSupportFragmentManager();
-
-        txt_tgl.setOnClickListener(new View.OnClickListener() {
+        date.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
-                new DatePickerDialog(this, date, myCalendar
-                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                DialogFragment newFragment = new DatePickerFragment();
+                newFragment.setTargetFragment(AddFragment.this,0);
+                newFragment.show(getFragmentManager(), "datePicker");
             }
+
+
         });
 
-        txt_jam.setOnClickListener(new View.OnClickListener() {
-
+        time.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
-                Calendar mcurrentTime = Calendar.getInstance();
-                int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
-                int minute = mcurrentTime.get(Calendar.MINUTE);
-                TimePickerDialog mTimePicker;
-                mTimePicker = new TimePickerDialog(MainActivity.this, new TimePickerDialog.OnTimeSetListener() {
-
-                    @Override
-                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        txt_jam.setText(selectedHour + ":" + selectedMinute);
-                    }
-                }, hour, minute, true);//Yes 24 hour time
-                mTimePicker.setTitle("Select Time");
-                mTimePicker.show();
-
+                DialogFragment newFragment = new TimePickerFragment();
+                newFragment.setTargetFragment(AddFragment.this,0);
+                newFragment.show(getFragmentManager(),"TimePicker");
             }
         });
 
-        btn_get_datetime.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(MainActivity.this,
-                        "Tanggal : " + txt_tgl.getText().toString() + "\n" +
-                                "Jam : " + txt_jam.getText().toString()
-                        , Toast.LENGTH_SHORT
-                ).show();
-            }
-        });
+
         btn.setOnClickListener(new View.OnClickListener() {
+
+
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), ScanActivity.class);
@@ -157,9 +136,12 @@ public class AddFragment extends Fragment{
                     et_tgl_kembali.setError( "Form tidak boleh kosong!" );
                 } else if (TextUtils.isEmpty(et_keperluan.getText())){
                     et_keperluan.setError("Form tidak boleh kosong!");
-                }else {
+                }else if (TextUtils.isEmpty(et_waktu.getText())){
+                    et_waktu.setError("Form tidak boleh kosong!");
+                }
+                else {
                     Intent i = new Intent(getActivity(), ScanAdminAddActivity.class);
-                    i.putExtra("tgl_aju_kembali",et_tgl_kembali.getText().toString());
+                    i.putExtra("tgl_aju_kembali",et_tgl_kembali.getText().toString()+ " " + et_waktu.getText().toString());
                     i.putExtra("keperluan",et_keperluan.getText().toString());
                     startActivity(i);
                 }
@@ -169,6 +151,7 @@ public class AddFragment extends Fragment{
         });
         return root;
     }
+
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -251,9 +234,14 @@ public class AddFragment extends Fragment{
                 et_keperluan.setText("");
                 add.clear();
                 adapter.setData(add);
-        }
+        } // check for the results
+
     }
 
-
-
+    @Override
+    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) { // what should be done when a date is selected
+        StringBuilder sb = new StringBuilder().append(year).append("/").append(monthOfYear + 1).append("/").append(dayOfMonth);
+        String formattedDate = sb.toString();
+        et_tgl_kembali.setText(formattedDate);
+    }
 }
