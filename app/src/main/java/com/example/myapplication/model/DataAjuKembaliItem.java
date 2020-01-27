@@ -10,6 +10,9 @@ public class DataAjuKembaliItem{
 	@SerializedName("kode")
 	private String kode;
 
+	@SerializedName("denda")
+	private String denda;
+
 	@SerializedName("name")
 	private String name;
 
@@ -28,6 +31,10 @@ public class DataAjuKembaliItem{
 
 	public String getKode(){
 		return kode;
+	}
+
+	public String getDenda(){
+		return denda;
 	}
 
 	public String getName(){

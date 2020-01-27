@@ -128,7 +128,7 @@ public class AddFragment extends Fragment implements DatePickerDialog.OnDateSetL
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), ScanActivity.class);
                 startActivity(intent);
-                setButtonState(true, false);
+//                setButtonState(true, false);
             }
         });
 
@@ -147,7 +147,7 @@ public class AddFragment extends Fragment implements DatePickerDialog.OnDateSetL
                     i.putExtra("tgl_aju_kembali",et_tgl_kembali.getText().toString()+ " " + et_waktu.getText().toString());
                     i.putExtra("keperluan",et_keperluan.getText().toString());
                     startActivity(i);
-                    setButtonState(true,true);
+//                    setButtonState(true,true);
                 }
 
 

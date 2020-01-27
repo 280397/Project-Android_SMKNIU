@@ -32,13 +32,13 @@ public class DetailActivity extends AppCompatActivity {
         merek = getIntent().getExtras().getString("merek");
         model = getIntent().getExtras().getString("model");
         posisi = getIntent().getExtras().getString("posisi");
-        show1.setText(":"+barcode);
-        show2.setText(":"+name);
-        show3.setText(":"+merek);
-        show4.setText(":"+model);
-        show5.setText(":"+kondisi);
-        show6.setText(":"+lokasi);
-        show7.setText(":"+posisi);
+        show1.setText(": "+barcode);
+        show2.setText(": "+name);
+        show3.setText(": "+merek);
+        show4.setText(": "+model);
+        show5.setText(": "+kondisi);
+        show6.setText(": "+lokasi);
+        show7.setText(": "+posisi);
 
     }
 

@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,9 +15,12 @@ import android.widget.Toast;
 import com.example.myapplication.R;
 import com.example.myapplication.ScanFinishActivity;
 import com.example.myapplication.ScanFinishAdminActivity;
+import com.example.myapplication.adapter.DendaAdapter;
 import com.example.myapplication.adapter.FinishListAdapter;
 import com.example.myapplication.model.DataAjuKembaliItem;
+import com.example.myapplication.model.DataDendaItem;
 import com.example.myapplication.model.ResponseAjuKembali;
+import com.example.myapplication.model.ResponseDenda;
 import com.example.myapplication.network.Initretrofit;
 import com.example.myapplication.sharepref.SharedPreferences;
 import com.pixplicity.easyprefs.library.Prefs;
@@ -34,14 +38,16 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class FinishFragment extends Fragment {
-    String kode, id_user_pjmm,id;
-    private Button btn;
+    String kode, id_user_pjmm, id_user_pjmmm,id;
+    ImageButton btn;
     FinishListAdapter adapterfinish;
-    RecyclerView recyclerView;
-    ProgressBar progressBar;
+    DendaAdapter adapterdenda;
+    RecyclerView recyclerView, reDenda;
+    ProgressBar progressBar,progressBarDend;
     Button finish_btnadmin;
-    TextView denda;
+    private TextView denda;
     private List<DataAjuKembaliItem> finish;
+    private List<DataDendaItem> dendas;
     private FinishViewModel finishViewModel;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -51,11 +57,13 @@ public class FinishFragment extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_finish, container, false);
         recyclerView = root.findViewById(R.id.rv_finish_list);
+//        reDenda = root.findViewById(R.id.rv_denda);
 
         finish_btnadmin =root.findViewById(R.id.finish_btnadmin);
        denda = root.findViewById(R.id.id_denda);
-        btn = (Button) root.findViewById(R.id.finish_btnscan);
+        btn = root.findViewById(R.id.finish_btnscan);
         progressBar = root.findViewById(R.id.progfinish);
+        progressBarDend = root.findViewById(R.id.progdenda);
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,6 +126,31 @@ public class FinishFragment extends Fragment {
             }
         });
     }
+    private void getDenda(final String id_user_pjm){
+        Call<ResponseDenda> dend = Initretrofit.getInstance().getDenda(id_user_pjm);
+        dend.enqueue(new Callback<ResponseDenda>() {
+            @Override
+            public void onResponse(Call<ResponseDenda> call, Response<ResponseDenda> response) {
+                ResponseDenda den = response.body();
+                if (den.isStatus()){
+//                    dendas = den.getDataDenda();
+                    denda.setText("Denda :"+response.body().getDataDenda().get(0).getDend());
+//                    adapterdenda = new DendaAdapter();
+//                    adapterdenda.setData(dendas);
+//                    id_user_pjmmm = den.get(0).getIdUserPjm();
+                    progressBarDend.setVisibility(View.GONE);
+//                    recyclerView.setAdapter(adapterdenda);
+                }else {
+                    progressBarDend.setVisibility(View.GONE);
+                }
+            }
+            @Override
+            public void onFailure(Call<ResponseDenda> call, Throwable t) {
+                Toast.makeText(getActivity(), "Gagal menampilkan data!", Toast.LENGTH_SHORT).show();
+                progressBarDend.setVisibility(View.GONE);
+            }
+        });
+    }
 
     private void delete(final String id, final int possition){
        Call<ResponseAjuKembali> delete = Initretrofit.getInstance().delFinishList(id);
@@ -140,14 +173,14 @@ public class FinishFragment extends Fragment {
     public void onResume() {
         super.onResume();
         getData(Prefs.getString(SharedPreferences.getId(),""));
+        getDenda(Prefs.getString(SharedPreferences.getId(),""));
 
     }
+
 
     void setButtonState(Boolean isItem,
                         Boolean isAdmin) {
         btn.setEnabled(isItem);
         finish_btnadmin.setEnabled(isAdmin);
     }
-
-
 }

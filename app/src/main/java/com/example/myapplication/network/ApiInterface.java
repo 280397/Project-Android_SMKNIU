@@ -4,6 +4,7 @@ import com.example.myapplication.model.ResponseAdd;
 import com.example.myapplication.model.ResponseAdmin;
 import com.example.myapplication.model.ResponseAjuKembali;
 import com.example.myapplication.model.ResponseData;
+import com.example.myapplication.model.ResponseDenda;
 import com.example.myapplication.model.ResponseKembali;
 import com.example.myapplication.model.ResponseLogin;
 
@@ -100,7 +101,7 @@ public interface ApiInterface {
             @Path("id") String id
     );
 
-    //    post aju pinjam
+    //    post aju kembali
     @FormUrlEncoded
     @POST("api/kembali")
     Call<ResponseKembali> postKembaliSe(
@@ -118,6 +119,12 @@ public interface ApiInterface {
 //            @Field("id_user_pjm") String id_user_pjm,
 //            @Field("tgl_pinjam") String tgl_pinjam,
             @Field("id_admin") String id_admin
+    );
+
+//    get denda
+    @GET("api/kembali/ambild")
+    Call<ResponseDenda> getDenda(
+            @Query("id_user_pjm") String id_user_pjm
     );
 
 }
